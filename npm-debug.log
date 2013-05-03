@@ -1,0 +1,32 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/wasd/.nvm/v0.8.23/bin/node',
+1 verbose cli   '/home/wasd/.nvm/v0.8.23/bin/npm',
+1 verbose cli   'start' ]
+2 info using npm@1.2.18
+3 info using node@v0.8.23
+4 verbose read json /home/wasd/Programs/node_projects/photofriend/package.json
+5 warn package.json photofriend@0.0.1 No README.md file found!
+6 verbose run-script [ 'prestart', 'start', 'poststart' ]
+7 info prestart photofriend@0.0.1
+8 info start photofriend@0.0.1
+9 verbose unsafe-perm in lifecycle true
+10 silly exec sh "-c" "coffee app.coffee"
+11 silly sh,-c,coffee app.coffee,/home/wasd/Programs/node_projects/photofriend spawning
+12 info photofriend@0.0.1 Failed to exec start script
+13 error photofriend@0.0.1 start: `coffee app.coffee`
+13 error `sh "-c" "coffee app.coffee"` failed with 1
+14 error Failed at the photofriend@0.0.1 start script.
+14 error This is most likely a problem with the photofriend package,
+14 error not with npm itself.
+14 error Tell the author that this fails on your system:
+14 error     coffee app.coffee
+14 error You can get their info via:
+14 error     npm owner ls photofriend
+14 error There is likely additional logging output above.
+15 error System Linux 3.8.0-19-generic
+16 error command "/home/wasd/.nvm/v0.8.23/bin/node" "/home/wasd/.nvm/v0.8.23/bin/npm" "start"
+17 error cwd /home/wasd/Programs/node_projects/photofriend
+18 error node -v v0.8.23
+19 error npm -v 1.2.18
+20 error code ELIFECYCLE
+21 verbose exit [ 1, true ]
