@@ -1,19 +1,21 @@
 extends layout
 
 block content
-  div.container
-    div.row
-      div.span12
+  div.container-fluid
+    div.row-fluid
+      div.span2
         form(action="/", method="post")
+          legend Photo Friends
+          label Upload a photo to share with the world.
           input(type="file", name="image", id="user-file")
-          input(type="submit")
-    div.row
-      div.span12
+          input.btn.btn-primary(type="submit", value="Submit")
         div.progress.progress-striped.active.hide
           div.bar(style='width: 0%')
-    div.row
-      div.span12
         div.alert.hide
           button.close(type='button', data-dismiss='alert') x
           span
             strong.message
+      div#images.span10
+        each image in images
+          div.img-crop
+            img(src="/uploads/#{image}")

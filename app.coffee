@@ -3,8 +3,13 @@ routes = require './routes'
 http = require 'http'
 path = require 'path'
 fs = require 'fs'
+io = require 'socket.io'
 
 app = express()
+server = http.createServer(app)
+sockets = io.listen(server)
+
+images = fs.readdirSync('./public/uploads')
 
 app.configure () ->
   app.set 'port', process.env.PORT || 3000
@@ -24,11 +29,20 @@ if 'development' == app.get 'env'
   app.use express.errorHandler()
 
 app.get '/', (req, res) ->
-  res.render 'index'
+  res.render 'index', { "images": images }
 
 app.post '/', (req, res) ->
+  name = req.files.image.path.substring(15)
+  images.unshift(name)
+  sockets.emit 'new image', name
+  console.log 'sent event ' + name
   res.end()
   
-http.createServer(app).listen(app.get('port'), () ->
+server.listen(app.get('port'), () ->
   console.log('Express server listening on port ' + app.get('port'))
 )
+
+
+sockets.on 'connection', (socket) ->
+  socket.on 'new image', (name) ->
+    socket.broadcast.emit 'new image', name
