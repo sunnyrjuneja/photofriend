@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "3.2.1",
     "jade": "*",
-    "socket.io": "0.9.x"
+    "socket.io": "0.9.x",
+    "coffee-script": "1.6.x"
   }
 }
