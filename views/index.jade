@@ -1,21 +1,24 @@
 extends layout
 
 block content
-  div.container-fluid
-    div.row-fluid
-      div.span2
+  .container-fluid
+    .row-fluid
+      .span2
         form(action="/", method="post")
           legend Photo Friends
           label Upload a photo to share with the world.
-          input(type="file", name="image", id="user-file")
-          input.btn.btn-primary(type="submit", value="Submit")
-        div.progress.progress-striped.active.hide
-          div.bar(style='width: 0%')
-        div.alert.hide
+          .controls.controls-row
+            input#user-file(type="file", name="image", style="display: none;")
+            input#user-file-text.span6(type="text")
+            input#user-file-button.btn(type="button", value="Browse..")
+          input.btn.btn-primary(type="submit", value="Submit", style="display: none;")
+        #progress-bar.progress.progress-striped.active.hide
+          .bar(style='width: 0%')
+        #message.alert.hide
           button.close(type='button', data-dismiss='alert') x
           span
-            strong.message
-      div#images.span10
+            strong
+      #images.span10
         each image in images
-          div.img-crop
+          .img-crop
             img(src="/uploads/#{image}")
