@@ -2,7 +2,7 @@ $ ->
   iosocket = io.connect()
   iosocket.on 'connect', () ->
     iosocket.on 'new image', (name) ->
-      $('#images').append('<div class="img-crop"><img src="/uploads/' + name + '></div>')
+      $('#images').prepend('<div class="img-crop"><img src="/uploads/' + name + '"></div>')
 
   send_message = (message) ->
     $('div.progress').hide()

@@ -6,8 +6,7 @@
     iosocket = io.connect();
     iosocket.on('connect', function() {
       return iosocket.on('new image', function(name) {
-        console.log("name");
-        return $('#images').append('<div class="img-crop"><img src="/uploads/' + name + '></div>');
+        return $('#images').prepend('<div class="img-crop"><img src="/uploads/' + name + '"></div>');
       });
     });
     send_message = function(message) {
