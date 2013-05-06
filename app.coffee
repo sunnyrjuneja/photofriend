@@ -2,7 +2,6 @@ express = require('express')
 app = express()
 server = require('http').Server(app)
 io = require('socket.io').listen(server)
-routes = require './routes'
 path = require 'path'
 fs = require 'fs'
 
@@ -37,3 +36,7 @@ app.post '/', (req, res) ->
 
 server.listen app.get('port'), () ->
   console.log('Express server listening on port ' + app.get('port'))
+
+io.configure () ->
+  io.set "transports", ["xhr-polling"]
+  io.set "polling duration", 10

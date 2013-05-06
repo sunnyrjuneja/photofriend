@@ -7,23 +7,12 @@ a {
   color: #00B7FF;
 }
 
-.img-crop,
-.img-crop img{
-  width: 100%; /* gotta be responsive these days */
+.img-crop {
+  width: 612px;
+  margin: 20px auto;
+  margin-
 }
 
-.img-crop{
-  background-color: #ededed; /* some background color for short images */
-  overflow: hidden;
-  
-  /* remove white-space for inline-block elements */
-  letter-spacing: -0.31em; /* webkit */
-  *letter-spacing: normal; /* reset IE < 8 */
-  word-spacing: -0.43em; /* IE < 8 && gecko */
-}
-
-.img-crop img{
-  /* vertically center the image */
-  display: inline-block;
-  vertical-align: middle;
+.img-crop img {
+  max-width: 100%;
 }
