@@ -6,9 +6,9 @@ $ ->
   filepicker.pickAndStore {
     mimetype: 'image/*',
     maxSize: 2097152
-  },
-    {}, ((fpfile) ->
-      console.log "SUP"
-      iosocket.emit 'upload', fpfile),
-    ((fpfile) ->
-      console.log "ERROR")
+  }, {},
+    (fpfile) ->
+      console.log "Success"
+      iosocket.emit 'upload', fpfile
+    (fpfile) ->
+      console.log "ERROR"

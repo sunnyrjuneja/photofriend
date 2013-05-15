@@ -8,12 +8,12 @@
     return filepicker.pickAndStore({
       mimetype: 'image/*',
       maxSize: 2097152
-    }, {}, (function(fpfile) {
-      console.log("SUP");
+    }, {}, function(fpfile) {
+      console.log("Success");
       return iosocket.emit('upload', fpfile);
-    }), (function(fpfile) {
+    }, function(fpfile) {
       return console.log("ERROR");
-    }));
+    });
   });
 
 }).call(this);
