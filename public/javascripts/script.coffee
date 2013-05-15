@@ -1,7 +1,14 @@
 $ ->
   iosocket = io.connect()
-  iosocket.on 'connect', () ->
-    iosocket.on 'new image', (name) ->
-      $('#images').prepend("<div class='img-crop'><img src='/uploads/#{name}'></div>")
   
   filepicker.setKey("AvovSWfJJQCaOl9IhtTofz")
+
+  filepicker.pickAndStore {
+    mimetype: 'image/*',
+    maxSize: 2097152
+  },
+    {}, ((fpfile) ->
+      console.log "SUP"
+      iosocket.emit 'upload', fpfile),
+    ((fpfile) ->
+      console.log "ERROR")

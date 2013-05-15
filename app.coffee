@@ -1,9 +1,10 @@
-express = require('express')
+express = require 'express'
 app = express()
 server = require('http').Server(app)
 io = require('socket.io').listen(server)
 path = require 'path'
 fs = require 'fs'
+mongoose = require 'mongoose'
 
 images = fs.readdirSync('./public/uploads')
 
@@ -37,6 +38,6 @@ app.post '/', (req, res) ->
 server.listen app.get('port'), () ->
   console.log('Express server listening on port ' + app.get('port'))
 
-io.configure () ->
-  io.set "transports", ["xhr-polling"]
-  io.set "polling duration", 10
+io.sockets.on 'connection', (socket) ->
+  socket.on 'upload', (data) ->
+    console.log(data)
