@@ -5,14 +5,18 @@
 
     iosocket = io.connect();
     filepicker.setKey("AvovSWfJJQCaOl9IhtTofz");
-    return filepicker.pickAndStore({
-      mimetype: 'image/*',
-      maxSize: 2097152
-    }, {}, function(fpfile) {
-      console.log("Success");
-      return iosocket.emit('upload', fpfile);
-    }, function(fpfile) {
-      return console.log("ERROR");
+    return $("#filepicker").click(function() {
+      console.log("Hmm");
+      filepicker.pickAndStore({
+        mimetype: 'image/*',
+        maxSize: 2097152
+      }, {}, (function(fpfile) {
+        console.log("Success");
+        return iosocket.emit('upload', fpfile);
+      }), (function(fpfile) {
+        return console.log("ERROR");
+      }));
+      return false;
     });
   });
 
