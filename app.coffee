@@ -23,7 +23,7 @@ app.configure () ->
   app.use express.logger 'dev'
   app.use express.methodOverride()
   app.use app.router
-  app.use express.static(path.join(__dirname, 'public'))
+  app.use express.static path.join __dirname, 'public'
  
 if 'development' == app.get 'env'
   app.use express.errorHandler()
@@ -32,15 +32,16 @@ app.get '/', (req, res) ->
   res.render 'index'
 
 server.listen app.get('port'), () ->
-  console.log('Express server listening on port ' + app.get('port'))
+  console.log 'Express server listening on port ' + app.get 'port'
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'upload', (json) ->
     console.log "Trying"
+    console.log json
     p = new Photo(json)
     p.save (err) ->
       if err
         console.log "Photo upload failed"
         console.log err
       else
-        console.log "SUCCESS"
+        console.log "Success"
