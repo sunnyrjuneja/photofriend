@@ -9,3 +9,6 @@ block content
           .controls.controls-row
             input(type="button", id="fpicker", value="Upload") 
       #images.span10
+        each photo in photos
+          .img-crop
+            img(src=photo.url)
