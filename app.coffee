@@ -1,9 +1,25 @@
 express = require 'express'
 app = express()
 server = require('http').Server(app)
+
 io = require('socket.io').listen(server)
+
+passport = require 'passport'
+PersonaStrategy = require('passport-persona').Strategy
+
+passport.serializeUser (user, done) ->
+  done null, user.email
+
+passport.deserializeUser (email, done) ->
+  done null, email: email
+
+passport.use new PersonaStrategy { audience: 'http://localhost:3000' }, (email, done) ->
+  process.nextTick () ->
+    done null, { email: email }
+
 path = require 'path'
 fs = require 'fs'
+
 mongoose = require 'mongoose'
 mongoose.connect 'mongodb://localhost/photos'
 
@@ -23,6 +39,10 @@ app.configure () ->
   app.use express.favicon()
   app.use express.logger 'dev'
   app.use express.methodOverride()
+  app.use express.cookieParser()
+  app.use express.session secret: 'keyboard cat'
+  app.use passport.initialize()
+  app.use passport.session()
   app.use app.router
   app.use express.static path.join __dirname, 'public'
  
@@ -30,7 +50,13 @@ if 'development' == app.get 'env'
   app.use express.errorHandler()
 
 app.get '/', (req, res) ->
-  res.render 'index'
+  res.render 'index', user: req.user
+
+app.get '/login', (req, res) ->
+  res.render('login', { user: req.user })
+
+app.post '/auth/browserid', passport.authenticate('persona', { failureRedirect: '/login' }), (req, res) ->
+  res.redirect('/')
 
 app.get '/list', (req, res) ->
   createdAt = req.query["createdAt"]

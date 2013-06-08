@@ -21,7 +21,15 @@ $ ->
 
   $(document).ready () ->
     $(window).bind('scroll', loadOnScroll)
+    $('#browserid').click () ->
+      navigator.id.get (assertion) ->
+        if assertion
+          $("input[name=assertion]").val assertion
+          $("form[name=persona]").submit()
+        else
+         location.reload()
     ajaxPhotos()
+
 
   loadOnScroll = () ->
     if $(window).scrollTop() > $(document).height() - ($(window).height()*2)

@@ -8,4 +8,12 @@ block content
           label Upload a photo to share with the world.
           .controls.controls-row
             input(type="button", id="fpicker", value="Upload") 
+
+          if !user
+            img(src="https://developer.mozilla.org/files/3969/plain_sign_in_blue.png", id="browserid")
+            form(action="/auth/browserid", method="post")
+                input(type="text", name="assertion", style="display: none;")
+          else
+            p Hi, #{user.email}.
+
       #photos.span10

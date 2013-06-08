@@ -16,3 +16,7 @@ a {
 .img-crop img {
   max-width: 100%;
 }
+
+#browserid {
+  margin-top: 20px;
+}

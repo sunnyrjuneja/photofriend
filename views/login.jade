@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  form(action="/auth/browserid", method="post", style="display:none;")
+    input(type="text", name="assertion")
+
+  img(src="https://developer.mozilla.org/files/3969/plain_sign_in_blue.png", id="browserid")
