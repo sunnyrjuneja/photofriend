@@ -22,6 +22,16 @@ $(function() {
   createdAt = "";
   $(document).ready(function() {
     $(window).bind('scroll', loadOnScroll);
+    $('#browserid').click(function() {
+      return navigator.id.get(function(assertion) {
+        if (assertion) {
+          $("input[name=assertion]").val(assertion);
+          return $("form[name=persona]").submit();
+        } else {
+          return location.reload();
+        }
+      });
+    });
     return ajaxPhotos();
   });
   loadOnScroll = function() {
