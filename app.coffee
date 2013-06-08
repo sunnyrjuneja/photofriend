@@ -16,7 +16,6 @@ Photo = mongoose.model "Photo",
   isWriteable: Boolean,
   createdAt: Date
 
-
 app.configure () ->
   app.set 'port', process.env.PORT || 3000
   app.set 'views', __dirname + '/views'
@@ -31,18 +30,22 @@ if 'development' == app.get 'env'
   app.use express.errorHandler()
 
 app.get '/', (req, res) ->
-  Photo.find().sort('createdAt': 1).limit(20).exec (err, docs) ->
-    if err
-      console.log err
-    else
-      res.render 'index', "photos": docs
+  res.render 'index'
 
 app.get '/list', (req, res) ->
-  Photo.where('createdAt').lt(req.query["createdAt"]).sort('createdAt': 1).limit(20).exec (err, docs) ->
-    if err
-      console.log err
-    else
-      res.json docs
+  createdAt = req.query["createdAt"]
+  if createdAt == ""
+    Photo.find().sort('createdAt': -1).limit(10).exec (err, docs) ->
+      if err
+        console.log err
+      else
+        res.json docs
+  else
+    Photo.where('createdAt').lt(createdAt).sort('createdAt': -1).limit(10).exec (err, docs) ->
+      if err
+        console.log err
+      else
+        res.json docs
 
 server.listen app.get('port'), () ->
   console.log 'Express server listening on port ' + app.get 'port'
@@ -50,7 +53,7 @@ server.listen app.get('port'), () ->
 io.sockets.on 'connection', (socket) ->
   socket.on 'upload', (json) ->
     console.log "Trying"
-    console.log json
+    json.createdAt = new Date()
     p = new Photo(json)
     p.save (err) ->
       if err

@@ -1,7 +1,7 @@
 $ ->
   iosocket = io.connect()
   iosocket.on 'new image', (photo) ->
-    $('#images').prepend('<div class="img-crop"><img src="'+ photo.url + '"></div>')
+    $('#photos').prepend('<div class="img-crop"><img src="'+ photo.url + '"></div>')
 
   filepicker.setKey('AvovSWfJJQCaOl9IhtTofz')
 
@@ -17,9 +17,11 @@ $ ->
     return false
 
   hasNextPage = true
+  createdAt = ""
 
   $(document).ready () ->
-     $(window).bind('scroll', loadOnScroll)
+    $(window).bind('scroll', loadOnScroll)
+    ajaxPhotos()
 
   loadOnScroll = () ->
     if $(window).scrollTop() > $(document).height() - ($(window).height()*2)
@@ -30,4 +32,15 @@ $ ->
     if !hasNextPage
       return false
     else
+      ajaxPhotos()
 
+  ajaxPhotos = () ->
+    $.ajax
+      url: 'list?createdAt=' + createdAt,
+      success: (data, status, jqXHR) ->
+        for photo in data
+          $("#photos").append('<div class="img-crop"><img src="' + photo.url + '"></div>')
+        dataLength = data.length
+        if dataLength < 10
+          hasNextPage = false
+        createdAt = data[dataLength - 1].createdAt
