@@ -1,6 +1,8 @@
 $ ->
   iosocket = io.connect()
-  
+  iosocket.on 'new image', (photo) ->
+    $('#images').prepend('<div class="img-crop"><img src="'+ photo.url + '"></div>')
+
   filepicker.setKey('AvovSWfJJQCaOl9IhtTofz')
 
   $('#fpicker').click () ->
@@ -13,9 +15,10 @@ $ ->
       (fpfile) ->
         console.log "ERROR"
     return false
+
   hasNextPage = true
 
-  $(document).ready(() ->
+  $(document).ready () ->
      $(window).bind('scroll', loadOnScroll)
 
   loadOnScroll = () ->
@@ -23,9 +26,8 @@ $ ->
       $(window).unbind()
       loadItems()
 
-  loadItems = ->
+  loadItems = () ->
     if !hasNextPage
       return false
     else
-      $.ajax
-        url: 'list
+

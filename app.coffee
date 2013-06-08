@@ -31,14 +31,14 @@ if 'development' == app.get 'env'
   app.use express.errorHandler()
 
 app.get '/', (req, res) ->
-  Photo.find().sort('createdAt': -1).limit(20).exec (err, docs) ->
+  Photo.find().sort('createdAt': 1).limit(20).exec (err, docs) ->
     if err
       console.log err
     else
       res.render 'index', "photos": docs
 
 app.get '/list', (req, res) ->
-  Photo.where('createdAt').lt(req.query["createdAt"]).sort('createdAt': -1).limit(20).exec (err, docs) ->
+  Photo.where('createdAt').lt(req.query["createdAt"]).sort('createdAt': 1).limit(20).exec (err, docs) ->
     if err
       console.log err
     else
@@ -50,7 +50,7 @@ server.listen app.get('port'), () ->
 io.sockets.on 'connection', (socket) ->
   socket.on 'upload', (json) ->
     console.log "Trying"
-    json.createdAt = new Date()
+    console.log json
     p = new Photo(json)
     p.save (err) ->
       if err
@@ -58,3 +58,4 @@ io.sockets.on 'connection', (socket) ->
         console.log err
       else
         console.log "Success"
+        io.sockets.emit 'new image', p
