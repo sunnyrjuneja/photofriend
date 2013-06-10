@@ -2,6 +2,7 @@ express = require 'express'
 app = express()
 server = require('http').Server(app)
 
+flash = require 'connect-flash'
 io = require('socket.io').listen(server)
 
 passport = require 'passport'
@@ -13,7 +14,7 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (email, done) ->
   done null, email: email
 
-passport.use new PersonaStrategy { audience: 'http://localhost:3000' }, (email, done) ->
+passport.use new PersonaStrategy { audience: 'http://127.0.0.1:3000' }, (email, done) ->
   process.nextTick () ->
     done null, { email: email }
 
@@ -41,6 +42,7 @@ app.configure () ->
   app.use express.methodOverride()
   app.use express.cookieParser()
   app.use express.session secret: 'keyboard cat'
+  app.use flash()
   app.use passport.initialize()
   app.use passport.session()
   app.use app.router
@@ -55,7 +57,7 @@ app.get '/', (req, res) ->
 app.get '/login', (req, res) ->
   res.render('login', { user: req.user })
 
-app.post '/auth/browserid', passport.authenticate('persona', { failureRedirect: '/login' }), (req, res) ->
+app.post '/auth/browserid', passport.authenticate('persona', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }), (req, res) ->
   res.redirect('/')
 
 app.get '/list', (req, res) ->
