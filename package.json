@@ -16,6 +16,7 @@
     "coffee-script": "1.6.x",
     "mongoose": "3.6.x",
     "passport": "0.1.x",
-    "passport-persona": "0.1.x"
+    "passport-persona": "0.1.x",
+    "connect-flash": "0.1.x"
   }
 }

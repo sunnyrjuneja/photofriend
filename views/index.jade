@@ -11,7 +11,7 @@ block content
 
           if !user
             img(src="https://developer.mozilla.org/files/3969/plain_sign_in_blue.png", id="browserid")
-            form(action="/auth/browserid", method="post")
+            form(action="/auth/browserid", name="persona", method="post")
                 input(type="text", name="assertion", style="display: none;")
           else
             p Hi, #{user.email}.
